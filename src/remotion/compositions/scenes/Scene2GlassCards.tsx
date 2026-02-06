@@ -11,9 +11,6 @@ import { loadFont as loadSpaceGrotesk } from "@remotion/google-fonts/SpaceGrotes
 import { loadFont as loadInter } from "@remotion/google-fonts/Inter";
 import { TextAnimation } from "../../library/components/text/TextAnimation";
 import { Glass } from "../../library/components/effects/Glass";
-import { MeshGradientBg } from "./MeshGradientBg";
-import { FloatingOrbs } from "./FloatingOrbs";
-import { Noise } from "../../library/components/effects/Noise";
 
 const { fontFamily: headingFont } = loadSpaceGrotesk("normal", {
   weights: ["600", "700"],
@@ -80,19 +77,6 @@ export const Scene2GlassCards: React.FC = () => {
 
   return (
     <AbsoluteFill>
-      <MeshGradientBg
-        colors={["#A855F7", "#3B82F6", "#FF206E", "#6366F1"]}
-        speed={0.25}
-      />
-      <FloatingOrbs
-        count={10}
-        colors={["#A855F780", "#FF206E60", "#41EAD460"]}
-        seed="glass-orbs"
-        minSize={4}
-        maxSize={10}
-      />
-      <Noise type="subtle" intensity={0.2} speed={0.3} opacity={0.1} />
-
       {/* Section Label */}
       <div
         style={{
@@ -306,7 +290,6 @@ export const Scene2GlassCards: React.FC = () => {
                 marginBottom: 16,
               }}
             >
-              {/* Avatar placeholder */}
               <div
                 style={{
                   width: 44,

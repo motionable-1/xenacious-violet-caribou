@@ -13,9 +13,6 @@ import { TextAnimation } from "../../library/components/text/TextAnimation";
 import { Glass } from "../../library/components/effects/Glass";
 import { Glow } from "../../library/components/effects/Glow";
 import { KineticText } from "../../library/components/text/KineticText";
-import { MeshGradientBg } from "./MeshGradientBg";
-import { FloatingOrbs } from "./FloatingOrbs";
-import { Noise } from "../../library/components/effects/Noise";
 import { Particles } from "../../library/components/effects/Particles";
 
 const { fontFamily: headingFont } = loadSpaceGrotesk("normal", {
@@ -69,29 +66,8 @@ export const Scene4Finale: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
-  // Background scale for dramatic entrance
-  const bgScale = interpolate(frame, [0, 30], [1.15, 1], {
-    extrapolateRight: "clamp",
-  });
-
   return (
     <AbsoluteFill>
-      {/* Background */}
-      <div style={{ transform: `scale(${bgScale})` }}>
-        <MeshGradientBg
-          colors={["#FF206E", "#FBFF12", "#41EAD4", "#A855F7"]}
-          speed={0.5}
-        />
-      </div>
-
-      <FloatingOrbs
-        count={18}
-        colors={["#FF206E60", "#FBFF1240", "#41EAD460", "#A855F760"]}
-        seed="finale-orbs"
-        minSize={3}
-        maxSize={14}
-      />
-
       {/* Sparkle particles */}
       {showParticles && (
         <Particles
@@ -104,8 +80,6 @@ export const Scene4Finale: React.FC = () => {
           gravity={-30}
         />
       )}
-
-      <Noise type="grain" intensity={0.3} speed={0.5} opacity={0.12} />
 
       {/* Kinetic marquee backgrounds */}
       <div

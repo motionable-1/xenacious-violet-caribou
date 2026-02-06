@@ -9,9 +9,6 @@ import {
 } from "remotion";
 import { loadFont as loadSpaceGrotesk } from "@remotion/google-fonts/SpaceGrotesk";
 import { TextAnimation } from "../../library/components/text/TextAnimation";
-import { MeshGradientBg } from "./MeshGradientBg";
-import { FloatingOrbs } from "./FloatingOrbs";
-import { Noise } from "../../library/components/effects/Noise";
 
 const { fontFamily: headingFont } = loadSpaceGrotesk("normal", {
   weights: ["700"],
@@ -75,33 +72,8 @@ export const Scene1Intro: React.FC = () => {
   const ringScale = interpolate(ringProgress, [0, 1], [0.5, 2.5]);
   const ringOpacity = interpolate(ringProgress, [0, 0.3, 1], [0, 0.5, 0]);
 
-  // Background rotation for depth
-  const bgRotate = interpolate(frame, [0, 120], [0, 3], {
-    extrapolateRight: "clamp",
-  });
-
   return (
     <AbsoluteFill>
-      {/* Animated mesh gradient BG */}
-      <div style={{ transform: `rotate(${bgRotate}deg) scale(1.1)` }}>
-        <MeshGradientBg
-          colors={["#FF206E", "#A855F7", "#41EAD4", "#3B82F6"]}
-          speed={0.4}
-        />
-      </div>
-
-      {/* Floating orbs */}
-      <FloatingOrbs
-        count={15}
-        colors={["#FF206E80", "#41EAD480", "#A855F780", "#FBFF1280"]}
-        seed="intro-orbs"
-        minSize={3}
-        maxSize={8}
-      />
-
-      {/* Subtle noise texture */}
-      <Noise type="grain" intensity={0.3} speed={0.5} opacity={0.15} />
-
       {/* Pulse ring effect */}
       <div
         style={{

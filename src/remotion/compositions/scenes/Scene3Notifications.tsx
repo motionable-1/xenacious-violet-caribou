@@ -11,9 +11,6 @@ import { loadFont as loadSpaceGrotesk } from "@remotion/google-fonts/SpaceGrotes
 import { loadFont as loadInter } from "@remotion/google-fonts/Inter";
 import { TextAnimation } from "../../library/components/text/TextAnimation";
 import { Glass } from "../../library/components/effects/Glass";
-import { MeshGradientBg } from "./MeshGradientBg";
-import { FloatingOrbs } from "./FloatingOrbs";
-import { Noise } from "../../library/components/effects/Noise";
 
 const { fontFamily: headingFont } = loadSpaceGrotesk("normal", {
   weights: ["600", "700"],
@@ -80,19 +77,6 @@ export const Scene3Notifications: React.FC = () => {
 
   return (
     <AbsoluteFill>
-      <MeshGradientBg
-        colors={["#6366F1", "#FF206E", "#0EA5E9", "#A855F7"]}
-        speed={0.35}
-      />
-      <FloatingOrbs
-        count={8}
-        colors={["#FF206E60", "#FBFF1260", "#41EAD460"]}
-        seed="notif-orbs"
-        minSize={3}
-        maxSize={7}
-      />
-      <Noise type="grain" intensity={0.25} speed={0.4} opacity={0.12} />
-
       {/* Header */}
       <div
         style={{
@@ -220,7 +204,6 @@ export const Scene3Notifications: React.FC = () => {
                     gap: 14,
                   }}
                 >
-                  {/* Icon circle */}
                   <div
                     style={{
                       width: 42,
@@ -239,8 +222,6 @@ export const Scene3Notifications: React.FC = () => {
                       style={{ width: 22, height: 22 }}
                     />
                   </div>
-
-                  {/* Text */}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div
                       style={{
@@ -266,8 +247,6 @@ export const Scene3Notifications: React.FC = () => {
                       {notif.message}
                     </div>
                   </div>
-
-                  {/* Time */}
                   <div
                     style={{
                       fontFamily: bodyFont,
