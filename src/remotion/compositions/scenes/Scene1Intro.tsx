@@ -73,7 +73,7 @@ export const Scene1Intro: React.FC = () => {
   const ringOpacity = interpolate(ringProgress, [0, 0.3, 1], [0, 0.5, 0]);
 
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ backgroundColor: "transparent" }}>
       {/* Pulse ring effect */}
       <div
         style={{

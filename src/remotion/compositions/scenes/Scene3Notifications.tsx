@@ -76,7 +76,7 @@ export const Scene3Notifications: React.FC = () => {
   });
 
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ backgroundColor: "transparent" }}>
       {/* Header */}
       <div
         style={{

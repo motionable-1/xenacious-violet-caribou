@@ -77,15 +77,15 @@ export const ContinuousBackground: React.FC<ContinuousBackgroundProps> = ({
   const x4 = 75 + Math.cos(t * 0.5 + 2) * 20;
   const y4 = 80 + Math.sin(t * 0.7 + 1) * 15;
 
-  const bg = `
-    radial-gradient(circle at ${x1}% ${y1}%, ${c0}CC 0%, transparent 50%),
-    radial-gradient(circle at ${x2}% ${y2}%, ${c1}CC 0%, transparent 50%),
-    radial-gradient(circle at ${x3}% ${y3}%, ${c2}99 0%, transparent 50%),
-    radial-gradient(circle at ${x4}% ${y4}%, ${c3}CC 0%, transparent 50%)
+  const bgImage = `
+    radial-gradient(circle at ${x1}% ${y1}%, ${c0} 0%, transparent 55%),
+    radial-gradient(circle at ${x2}% ${y2}%, ${c1} 0%, transparent 55%),
+    radial-gradient(circle at ${x3}% ${y3}%, ${c2} 0%, transparent 55%),
+    radial-gradient(circle at ${x4}% ${y4}%, ${c3} 0%, transparent 55%)
   `;
 
   // Orb colors also morph
-  const orbColors = [`${c0}70`, `${c1}60`, `${c2}50`, `${c3}60`];
+  const orbColors = [`${c0}90`, `${c1}80`, `${c2}70`, `${c3}80`];
 
   return (
     <AbsoluteFill>
@@ -93,17 +93,17 @@ export const ContinuousBackground: React.FC<ContinuousBackgroundProps> = ({
       <AbsoluteFill
         style={{
           backgroundColor: "#0C0F0A",
-          background: bg,
+          backgroundImage: bgImage,
         }}
       />
 
       {/* Continuous floating orbs */}
       <FloatingOrbs
-        count={14}
+        count={16}
         colors={orbColors}
         seed="bg-orbs"
-        minSize={3}
-        maxSize={10}
+        minSize={4}
+        maxSize={14}
       />
 
       {/* Film grain texture */}

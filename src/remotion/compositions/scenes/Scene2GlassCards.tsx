@@ -76,7 +76,7 @@ export const Scene2GlassCards: React.FC = () => {
   const heartBeat = 1 + Math.sin((frame / fps) * 4) * 0.08;
 
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ backgroundColor: "transparent" }}>
       {/* Section Label */}
       <div
         style={{

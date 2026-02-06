@@ -67,7 +67,7 @@ export const Scene4Finale: React.FC = () => {
   });
 
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ backgroundColor: "transparent" }}>
       {/* Sparkle particles */}
       {showParticles && (
         <Particles
