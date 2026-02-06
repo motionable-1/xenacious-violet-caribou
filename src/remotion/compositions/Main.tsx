@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   AbsoluteFill,
   Artifact,
   useCurrentFrame,
+  useVideoConfig,
   Audio,
   Sequence,
+  interpolate,
 } from "remotion";
 import { TransitionSeries, linearTiming } from "@remotion/transitions";
 import { slide } from "@remotion/transitions/slide";
@@ -36,8 +38,30 @@ const TOTAL_DURATION = 450;
 const WHOOSH_URL =
   "https://pub-e3bfc0083b0644b296a7080b21024c5f.r2.dev/sfx/1770416096365_vwntv1sgxpn_sfx_whoosh_swipe_transition_sound_.mp3";
 
+const MUSIC_URL =
+  "https://pub-e3bfc0083b0644b296a7080b21024c5f.r2.dev/music/1770417640549_mnmmvjgeopp_music_Upbeat_trendy_electr.mp3";
+
 export const Main: React.FC = () => {
   const frame = useCurrentFrame();
+  const { fps, durationInFrames } = useVideoConfig();
+
+  // Music volume: fade in over 0.5s, hold, fade out over 1.5s at end
+  const musicVolume = useCallback(
+    (f: number) => {
+      const fadeInEnd = Math.round(0.5 * fps);
+      const fadeOutStart = durationInFrames - Math.round(1.5 * fps);
+      return interpolate(
+        f,
+        [0, fadeInEnd, fadeOutStart, durationInFrames],
+        [0, 0.35, 0.35, 0],
+        {
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+        },
+      );
+    },
+    [fps, durationInFrames],
+  );
 
   return (
     <>
@@ -96,6 +120,9 @@ export const Main: React.FC = () => {
         <Sequence from={SCENE_BREAKS[3]} durationInFrames={30}>
           <Audio src={WHOOSH_URL} volume={0.5} />
         </Sequence>
+
+        {/* Background music — full duration with fade in/out */}
+        <Audio src={MUSIC_URL} volume={musicVolume} />
       </AbsoluteFill>
     </>
   );
