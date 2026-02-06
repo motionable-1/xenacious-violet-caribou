@@ -1,5 +1,10 @@
 import React, { useMemo } from "react";
-import { useCurrentFrame, useVideoConfig, random, AbsoluteFill } from "remotion";
+import {
+  useCurrentFrame,
+  useVideoConfig,
+  random,
+  AbsoluteFill,
+} from "remotion";
 
 interface FloatingOrbsProps {
   count?: number;

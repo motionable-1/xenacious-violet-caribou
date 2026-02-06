@@ -4,7 +4,6 @@ import {
   useVideoConfig,
   spring,
   interpolate,
-  Easing,
   AbsoluteFill,
   Img,
 } from "remotion";
@@ -29,29 +28,57 @@ export const Scene1Intro: React.FC = () => {
   });
 
   // Main title spring
-  const titleSpring = spring({ frame: frame - 6, fps, config: { damping: 12, stiffness: 180, mass: 1.2 } });
+  const titleSpring = spring({
+    frame: frame - 6,
+    fps,
+    config: { damping: 12, stiffness: 180, mass: 1.2 },
+  });
   const titleY = interpolate(titleSpring, [0, 1], [80, 0]);
   const titleScale = interpolate(titleSpring, [0, 1], [0.7, 1]);
 
   // Subtitle entrance
-  const subSpring = spring({ frame: frame - 18, fps, config: { damping: 15, stiffness: 120 } });
+  const subSpring = spring({
+    frame: frame - 18,
+    fps,
+    config: { damping: 15, stiffness: 120 },
+  });
   const subY = interpolate(subSpring, [0, 1], [40, 0]);
 
   // Decorative line
-  const lineWidth = spring({ frame: frame - 12, fps, config: { damping: 20, stiffness: 100 } });
+  const lineWidth = spring({
+    frame: frame - 12,
+    fps,
+    config: { damping: 20, stiffness: 100 },
+  });
 
   // Emoji/icon pop-ins (staggered)
-  const icon1 = spring({ frame: frame - 22, fps, config: { damping: 8, stiffness: 200 } });
-  const icon2 = spring({ frame: frame - 26, fps, config: { damping: 8, stiffness: 200 } });
-  const icon3 = spring({ frame: frame - 30, fps, config: { damping: 8, stiffness: 200 } });
+  const icon1 = spring({
+    frame: frame - 22,
+    fps,
+    config: { damping: 8, stiffness: 200 },
+  });
+  const icon2 = spring({
+    frame: frame - 26,
+    fps,
+    config: { damping: 8, stiffness: 200 },
+  });
+  const icon3 = spring({
+    frame: frame - 30,
+    fps,
+    config: { damping: 8, stiffness: 200 },
+  });
 
   // Pulse ring
-  const ringProgress = interpolate(frame, [10, 60], [0, 1], { extrapolateRight: "clamp" });
+  const ringProgress = interpolate(frame, [10, 60], [0, 1], {
+    extrapolateRight: "clamp",
+  });
   const ringScale = interpolate(ringProgress, [0, 1], [0.5, 2.5]);
   const ringOpacity = interpolate(ringProgress, [0, 0.3, 1], [0, 0.5, 0]);
 
   // Background rotation for depth
-  const bgRotate = interpolate(frame, [0, 120], [0, 3], { extrapolateRight: "clamp" });
+  const bgRotate = interpolate(frame, [0, 120], [0, 3], {
+    extrapolateRight: "clamp",
+  });
 
   return (
     <AbsoluteFill>
@@ -107,7 +134,8 @@ export const Scene1Intro: React.FC = () => {
             transform: "translateX(-50%)",
             width: `${lineWidth * 120}px`,
             height: 3,
-            background: "linear-gradient(90deg, transparent, #41EAD4, transparent)",
+            background:
+              "linear-gradient(90deg, transparent, #41EAD4, transparent)",
             borderRadius: 2,
           }}
         />
@@ -132,7 +160,8 @@ export const Scene1Intro: React.FC = () => {
               fontWeight: 700,
               color: "white",
               lineHeight: 1.1,
-              textShadow: "0 0 40px rgba(65, 234, 212, 0.5), 0 4px 20px rgba(0,0,0,0.5)",
+              textShadow:
+                "0 0 40px rgba(65, 234, 212, 0.5), 0 4px 20px rgba(0,0,0,0.5)",
               letterSpacing: "-1px",
             }}
             createTimeline={({ textRef, tl, SplitText }) => {
@@ -140,7 +169,14 @@ export const Scene1Intro: React.FC = () => {
               tl.fromTo(
                 split.chars,
                 { opacity: 0, y: 30, scale: 0.8 },
-                { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.03, ease: "back.out(1.7)" }
+                {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  duration: 0.6,
+                  stagger: 0.03,
+                  ease: "back.out(1.7)",
+                },
               );
               return tl;
             }}
@@ -176,7 +212,13 @@ export const Scene1Intro: React.FC = () => {
               tl.fromTo(
                 split.chars,
                 { opacity: 0, x: -10 },
-                { opacity: 1, x: 0, duration: 0.4, stagger: 0.04, ease: "power3.out" }
+                {
+                  opacity: 1,
+                  x: 0,
+                  duration: 0.4,
+                  stagger: 0.04,
+                  ease: "power3.out",
+                },
               );
               return tl;
             }}
@@ -223,7 +265,9 @@ export const Scene1Intro: React.FC = () => {
             bottom: "10%",
             left: "50%",
             transform: "translateX(-50%)",
-            opacity: interpolate(frame, [40, 55], [0, 1], { extrapolateRight: "clamp" }),
+            opacity: interpolate(frame, [40, 55], [0, 1], {
+              extrapolateRight: "clamp",
+            }),
           }}
         >
           <div
@@ -251,11 +295,7 @@ export const Scene1Intro: React.FC = () => {
                   backgroundColor: "white",
                   position: "absolute",
                   left: "50%",
-                  top: interpolate(
-                    frame % 40,
-                    [0, 20, 40],
-                    [10, 30, 10]
-                  ),
+                  top: interpolate(frame % 40, [0, 20, 40], [10, 30, 10]),
                   transform: "translateX(-50%)",
                 }}
               />

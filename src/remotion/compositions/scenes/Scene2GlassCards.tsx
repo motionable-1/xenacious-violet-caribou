@@ -29,22 +29,42 @@ export const Scene2GlassCards: React.FC = () => {
   const { fps } = useVideoConfig();
 
   // Card 1 entrance (from left, rotated)
-  const card1Spring = spring({ frame: frame - 5, fps, config: { damping: 14, stiffness: 120 } });
+  const card1Spring = spring({
+    frame: frame - 5,
+    fps,
+    config: { damping: 14, stiffness: 120 },
+  });
   const card1X = interpolate(card1Spring, [0, 1], [-200, 0]);
   const card1Rotate = interpolate(card1Spring, [0, 1], [-15, -3]);
-  const card1Opacity = interpolate(card1Spring, [0, 0.3], [0, 1], { extrapolateRight: "clamp" });
+  const card1Opacity = interpolate(card1Spring, [0, 0.3], [0, 1], {
+    extrapolateRight: "clamp",
+  });
 
   // Card 2 entrance (from right)
-  const card2Spring = spring({ frame: frame - 15, fps, config: { damping: 14, stiffness: 120 } });
+  const card2Spring = spring({
+    frame: frame - 15,
+    fps,
+    config: { damping: 14, stiffness: 120 },
+  });
   const card2X = interpolate(card2Spring, [0, 1], [200, 0]);
   const card2Rotate = interpolate(card2Spring, [0, 1], [15, 3]);
-  const card2Opacity = interpolate(card2Spring, [0, 0.3], [0, 1], { extrapolateRight: "clamp" });
+  const card2Opacity = interpolate(card2Spring, [0, 0.3], [0, 1], {
+    extrapolateRight: "clamp",
+  });
 
   // Badge pop
-  const badgeSpring = spring({ frame: frame - 28, fps, config: { damping: 8, stiffness: 250 } });
+  const badgeSpring = spring({
+    frame: frame - 28,
+    fps,
+    config: { damping: 8, stiffness: 250 },
+  });
 
   // "50% OFF" gradient text reveal
-  const offerReveal = spring({ frame: frame - 20, fps, config: { damping: 18, stiffness: 100 } });
+  const offerReveal = spring({
+    frame: frame - 20,
+    fps,
+    config: { damping: 18, stiffness: 100 },
+  });
 
   // Floating card hover effect
   const floatY = Math.sin((frame / fps) * 1.5) * 5;
@@ -80,7 +100,11 @@ export const Scene2GlassCards: React.FC = () => {
           top: 60,
           left: "50%",
           transform: "translateX(-50%)",
-          opacity: spring({ frame: frame - 3, fps, config: { damping: 20, stiffness: 100 } }),
+          opacity: spring({
+            frame: frame - 3,
+            fps,
+            config: { damping: 20, stiffness: 100 },
+          }),
         }}
       >
         <TextAnimation
@@ -96,7 +120,13 @@ export const Scene2GlassCards: React.FC = () => {
             tl.fromTo(
               split.chars,
               { opacity: 0, y: 10 },
-              { opacity: 1, y: 0, duration: 0.3, stagger: 0.03, ease: "power2.out" }
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.3,
+                stagger: 0.03,
+                ease: "power2.out",
+              },
             );
             return tl;
           }}
@@ -116,7 +146,13 @@ export const Scene2GlassCards: React.FC = () => {
           width: 320,
         }}
       >
-        <Glass blur={18} opacity={0.12} borderRadius={24} borderOpacity={0.25} noise={0.04}>
+        <Glass
+          blur={18}
+          opacity={0.12}
+          borderRadius={24}
+          borderOpacity={0.25}
+          noise={0.04}
+        >
           <div style={{ padding: "28px 24px" }}>
             {/* Badge */}
             <div
@@ -131,7 +167,14 @@ export const Scene2GlassCards: React.FC = () => {
                 boxShadow: "0 4px 15px rgba(255, 32, 110, 0.4)",
               }}
             >
-              <span style={{ fontFamily: headingFont, fontSize: 12, color: "white", fontWeight: 700 }}>
+              <span
+                style={{
+                  fontFamily: headingFont,
+                  fontSize: 12,
+                  color: "white",
+                  fontWeight: 700,
+                }}
+              >
                 LIMITED
               </span>
             </div>
@@ -143,17 +186,27 @@ export const Scene2GlassCards: React.FC = () => {
                   fontFamily: headingFont,
                   fontSize: 48,
                   fontWeight: 700,
-                  background: "linear-gradient(135deg, #FBFF12, #FF206E, #A855F7)",
+                  background:
+                    "linear-gradient(135deg, #FBFF12, #FF206E, #A855F7)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   lineHeight: 1.1,
                 }}
                 createTimeline={({ textRef, tl, SplitText }) => {
-                  const split = new SplitText(textRef.current, { type: "chars" });
+                  const split = new SplitText(textRef.current, {
+                    type: "chars",
+                  });
                   tl.fromTo(
                     split.chars,
                     { opacity: 0, scale: 1.4, rotationX: 90 },
-                    { opacity: 1, scale: 1, rotationX: 0, duration: 0.5, stagger: 0.04, ease: "back.out(2)" }
+                    {
+                      opacity: 1,
+                      scale: 1,
+                      rotationX: 0,
+                      duration: 0.5,
+                      stagger: 0.04,
+                      ease: "back.out(2)",
+                    },
                   );
                   return tl;
                 }}
@@ -162,17 +215,43 @@ export const Scene2GlassCards: React.FC = () => {
               </TextAnimation>
             </div>
 
-            <p style={{ fontFamily: bodyFont, fontSize: 14, color: "rgba(255,255,255,0.65)", lineHeight: 1.5, marginTop: 4 }}>
+            <p
+              style={{
+                fontFamily: bodyFont,
+                fontSize: 14,
+                color: "rgba(255,255,255,0.65)",
+                lineHeight: 1.5,
+                marginTop: 4,
+              }}
+            >
               Premium collection available now
             </p>
 
             {/* Progress bar */}
             <div style={{ marginTop: 20 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-                <span style={{ fontFamily: bodyFont, fontSize: 11, color: "rgba(255,255,255,0.5)" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: 6,
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: bodyFont,
+                    fontSize: 11,
+                    color: "rgba(255,255,255,0.5)",
+                  }}
+                >
                   Claimed
                 </span>
-                <span style={{ fontFamily: headingFont, fontSize: 11, color: "#41EAD4" }}>
+                <span
+                  style={{
+                    fontFamily: headingFont,
+                    fontSize: 11,
+                    color: "#41EAD4",
+                  }}
+                >
                   {Math.round(progressWidth)}%
                 </span>
               </div>
@@ -211,9 +290,22 @@ export const Scene2GlassCards: React.FC = () => {
           width: 320,
         }}
       >
-        <Glass blur={18} opacity={0.12} borderRadius={24} borderOpacity={0.25} noise={0.04}>
+        <Glass
+          blur={18}
+          opacity={0.12}
+          borderRadius={24}
+          borderOpacity={0.25}
+          noise={0.04}
+        >
           <div style={{ padding: "24px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                marginBottom: 16,
+              }}
+            >
               {/* Avatar placeholder */}
               <div
                 style={{
@@ -232,10 +324,23 @@ export const Scene2GlassCards: React.FC = () => {
                 />
               </div>
               <div>
-                <div style={{ fontFamily: headingFont, fontSize: 15, color: "white", fontWeight: 600 }}>
+                <div
+                  style={{
+                    fontFamily: headingFont,
+                    fontSize: 15,
+                    color: "white",
+                    fontWeight: 600,
+                  }}
+                >
                   @designstudio
                 </div>
-                <div style={{ fontFamily: bodyFont, fontSize: 11, color: "rgba(255,255,255,0.5)" }}>
+                <div
+                  style={{
+                    fontFamily: bodyFont,
+                    fontSize: 11,
+                    color: "rgba(255,255,255,0.5)",
+                  }}
+                >
                   2 min ago
                 </div>
               </div>
@@ -253,7 +358,13 @@ export const Scene2GlassCards: React.FC = () => {
                 tl.fromTo(
                   split.words,
                   { opacity: 0, y: 8 },
-                  { opacity: 1, y: 0, duration: 0.3, stagger: 0.05, ease: "power2.out" }
+                  {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.3,
+                    stagger: 0.05,
+                    ease: "power2.out",
+                  },
                 );
                 return tl;
               }}
@@ -272,9 +383,24 @@ export const Scene2GlassCards: React.FC = () => {
               }}
             >
               {[
-                { icon: "ph:heart-fill", color: "%23FF206E", label: "2.4k", beat: true },
-                { icon: "ph:chat-circle-fill", color: "%2341EAD4", label: "128", beat: false },
-                { icon: "ph:share-fill", color: "%23A855F7", label: "56", beat: false },
+                {
+                  icon: "ph:heart-fill",
+                  color: "%23FF206E",
+                  label: "2.4k",
+                  beat: true,
+                },
+                {
+                  icon: "ph:chat-circle-fill",
+                  color: "%2341EAD4",
+                  label: "128",
+                  beat: false,
+                },
+                {
+                  icon: "ph:share-fill",
+                  color: "%23A855F7",
+                  label: "56",
+                  beat: false,
+                },
               ].map((item, idx) => {
                 const iconSpring = spring({
                   frame: frame - 40 - idx * 4,
@@ -296,7 +422,13 @@ export const Scene2GlassCards: React.FC = () => {
                       src={`https://api.iconify.design/${item.icon}.svg?color=${item.color}&width=18`}
                       style={{ width: 18, height: 18 }}
                     />
-                    <span style={{ fontFamily: bodyFont, fontSize: 12, color: "rgba(255,255,255,0.6)" }}>
+                    <span
+                      style={{
+                        fontFamily: bodyFont,
+                        fontSize: 12,
+                        color: "rgba(255,255,255,0.6)",
+                      }}
+                    >
                       {item.label}
                     </span>
                   </div>

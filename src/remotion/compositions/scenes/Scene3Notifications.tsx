@@ -24,47 +24,38 @@ const { fontFamily: bodyFont } = loadInter("normal", {
   subsets: ["latin"],
 });
 
-interface NotificationData {
-  icon: string;
-  iconColor: string;
-  title: string;
-  subtitle: string;
-  accent: string;
-  delay: number;
-}
-
-const notifications: NotificationData[] = [
+const notifications = [
   {
     icon: "ph:bell-ringing-fill",
     iconColor: "%23FBFF12",
-    title: "New follower! 🎉",
-    subtitle: "Sarah just followed you",
+    title: "New Follower",
+    message: "Sarah just followed you",
+    time: "Just now",
     accent: "#FBFF12",
-    delay: 5,
   },
   {
     icon: "ph:heart-fill",
     iconColor: "%23FF206E",
-    title: "Your post is trending",
-    subtitle: "2.4k likes in the last hour",
+    title: "Your post is trending!",
+    message: "2.4k likes in 1 hour",
+    time: "1m ago",
     accent: "#FF206E",
-    delay: 18,
   },
   {
-    icon: "ph:fire-fill",
-    iconColor: "%23FF6B35",
-    title: "Story milestone! 🔥",
-    subtitle: "10k views reached",
-    accent: "#FF6B35",
-    delay: 32,
+    icon: "ph:chat-circle-text-fill",
+    iconColor: "%2341EAD4",
+    title: "New Comment",
+    message: '"This is amazing! 🔥"',
+    time: "3m ago",
+    accent: "#41EAD4",
   },
   {
-    icon: "ph:confetti-fill",
+    icon: "ph:share-network-fill",
     iconColor: "%23A855F7",
-    title: "Featured creator 🏆",
-    subtitle: "You made the explore page!",
+    title: "Shared 128 times",
+    message: "Your reel went viral",
+    time: "5m ago",
     accent: "#A855F7",
-    delay: 45,
   },
 ];
 
@@ -72,47 +63,53 @@ export const Scene3Notifications: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Title entrance
-  const titleSpring = spring({ frame: frame - 3, fps, config: { damping: 15, stiffness: 120 } });
+  // Counter animation
+  const counterValue = Math.min(
+    9847,
+    Math.round(
+      interpolate(frame, [10, 70], [0, 9847], { extrapolateRight: "clamp" }),
+    ),
+  );
 
-  // Phone screen glow
-  const screenGlow = 0.3 + Math.sin((frame / fps) * 2) * 0.15;
+  // Heading
+  const headingSpring = spring({
+    frame: frame - 3,
+    fps,
+    config: { damping: 15, stiffness: 130 },
+  });
 
   return (
     <AbsoluteFill>
       <MeshGradientBg
-        colors={["#6366F1", "#FF206E", "#FBFF12", "#41EAD4"]}
+        colors={["#6366F1", "#FF206E", "#0EA5E9", "#A855F7"]}
         speed={0.35}
       />
       <FloatingOrbs
         count={8}
-        colors={["#6366F160", "#FF206E50", "#FBFF1240"]}
+        colors={["#FF206E60", "#FBFF1260", "#41EAD460"]}
         seed="notif-orbs"
         minSize={3}
         maxSize={7}
       />
       <Noise type="grain" intensity={0.25} speed={0.4} opacity={0.12} />
 
-      {/* Title */}
+      {/* Header */}
       <div
         style={{
           position: "absolute",
           top: 55,
           left: "50%",
-          transform: "translateX(-50%)",
-          opacity: titleSpring,
+          transform: `translateX(-50%) scale(${headingSpring})`,
+          opacity: headingSpring,
           textAlign: "center",
-          width: "100%",
-          padding: "0 40px",
         }}
       >
         <TextAnimation
-          className="text-balance"
           style={{
             fontFamily: headingFont,
-            fontSize: 15,
-            color: "rgba(255,255,255,0.6)",
-            letterSpacing: "3px",
+            fontSize: 13,
+            color: "rgba(255,255,255,0.5)",
+            letterSpacing: "4px",
             textTransform: "uppercase",
           }}
           createTimeline={({ textRef, tl, SplitText }) => {
@@ -120,35 +117,64 @@ export const Scene3Notifications: React.FC = () => {
             tl.fromTo(
               split.chars,
               { opacity: 0 },
-              { opacity: 1, duration: 0.2, stagger: 0.02, ease: "power2.out" }
+              { opacity: 1, duration: 0.2, stagger: 0.03, ease: "power2.out" },
             );
             return tl;
           }}
         >
-          STAY UPDATED
+          ACTIVITY
         </TextAnimation>
       </div>
 
-      {/* Phone frame glow */}
+      {/* Big Counter */}
       <div
         style={{
           position: "absolute",
-          top: 100,
+          top: 90,
           left: "50%",
           transform: "translateX(-50%)",
-          width: 360,
-          height: 700,
-          borderRadius: 36,
-          boxShadow: `0 0 60px 15px rgba(99, 102, 241, ${screenGlow})`,
-          pointerEvents: "none",
+          textAlign: "center",
         }}
-      />
+      >
+        <div
+          style={{
+            fontFamily: headingFont,
+            fontSize: 56,
+            fontWeight: 700,
+            background: "linear-gradient(135deg, #41EAD4, #A855F7)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            opacity: spring({
+              frame: frame - 8,
+              fps,
+              config: { damping: 20, stiffness: 100 },
+            }),
+          }}
+        >
+          {counterValue.toLocaleString()}
+        </div>
+        <div
+          style={{
+            fontFamily: bodyFont,
+            fontSize: 13,
+            color: "rgba(255,255,255,0.45)",
+            marginTop: 2,
+            opacity: spring({
+              frame: frame - 14,
+              fps,
+              config: { damping: 20, stiffness: 100 },
+            }),
+          }}
+        >
+          Total Engagements
+        </div>
+      </div>
 
       {/* Notification Stack */}
       <div
         style={{
           position: "absolute",
-          top: 120,
+          top: 240,
           left: "50%",
           transform: "translateX(-50%)",
           width: 340,
@@ -158,29 +184,34 @@ export const Scene3Notifications: React.FC = () => {
         }}
       >
         {notifications.map((notif, idx) => {
+          const notifDelay = 15 + idx * 8;
           const notifSpring = spring({
-            frame: frame - notif.delay,
+            frame: frame - notifDelay,
             fps,
-            config: { damping: 12, stiffness: 160 },
+            config: { damping: 12, stiffness: 180 },
           });
-          const slideX = interpolate(notifSpring, [0, 1], [300, 0]);
-          const notifOpacity = interpolate(notifSpring, [0, 0.2], [0, 1], {
-            extrapolateRight: "clamp",
-          });
-
-          // Subtle wiggle after landing
-          const wiggleFrame = frame - notif.delay - 15;
-          const wiggle = wiggleFrame > 0 ? Math.sin(wiggleFrame * 0.5) * interpolate(wiggleFrame, [0, 20], [3, 0], { extrapolateRight: "clamp" }) : 0;
+          const notifX = interpolate(
+            notifSpring,
+            [0, 1],
+            [idx % 2 === 0 ? -150 : 150, 0],
+          );
+          const floatOffset = Math.sin((frame / fps) * 1.2 + idx * 0.8) * 2;
 
           return (
             <div
               key={idx}
               style={{
-                transform: `translateX(${slideX}px) rotate(${wiggle}deg)`,
-                opacity: notifOpacity,
+                transform: `translateX(${notifX}px) translateY(${floatOffset}px)`,
+                opacity: notifSpring,
               }}
             >
-              <Glass blur={16} opacity={0.1} borderRadius={18} borderOpacity={0.2} noise={0.03}>
+              <Glass
+                blur={16}
+                opacity={0.1}
+                borderRadius={18}
+                borderOpacity={0.2}
+                noise={0.03}
+              >
                 <div
                   style={{
                     padding: "16px 18px",
@@ -194,9 +225,9 @@ export const Scene3Notifications: React.FC = () => {
                     style={{
                       width: 42,
                       height: 42,
-                      borderRadius: 14,
+                      borderRadius: "50%",
                       background: `${notif.accent}20`,
-                      border: `1px solid ${notif.accent}30`,
+                      border: `1px solid ${notif.accent}40`,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -209,14 +240,15 @@ export const Scene3Notifications: React.FC = () => {
                     />
                   </div>
 
-                  <div style={{ flex: 1 }}>
+                  {/* Text */}
+                  <div style={{ flex: 1, minWidth: 0 }}>
                     <div
                       style={{
                         fontFamily: headingFont,
                         fontSize: 14,
                         color: "white",
                         fontWeight: 600,
-                        marginBottom: 3,
+                        marginBottom: 2,
                       }}
                     >
                       {notif.title}
@@ -225,24 +257,27 @@ export const Scene3Notifications: React.FC = () => {
                       style={{
                         fontFamily: bodyFont,
                         fontSize: 12,
-                        color: "rgba(255,255,255,0.5)",
+                        color: "rgba(255,255,255,0.55)",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
                       }}
                     >
-                      {notif.subtitle}
+                      {notif.message}
                     </div>
                   </div>
 
-                  {/* Time dot */}
+                  {/* Time */}
                   <div
                     style={{
-                      width: 8,
-                      height: 8,
-                      borderRadius: "50%",
-                      backgroundColor: notif.accent,
-                      boxShadow: `0 0 8px ${notif.accent}60`,
+                      fontFamily: bodyFont,
+                      fontSize: 10,
+                      color: "rgba(255,255,255,0.35)",
                       flexShrink: 0,
                     }}
-                  />
+                  >
+                    {notif.time}
+                  </div>
                 </div>
               </Glass>
             </div>
@@ -254,13 +289,15 @@ export const Scene3Notifications: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          bottom: 100,
+          bottom: 80,
           left: "50%",
           transform: "translateX(-50%)",
-          opacity: interpolate(frame, [50, 65], [0, 1], { extrapolateRight: "clamp" }),
+          opacity: interpolate(frame, [55, 70], [0, 1], {
+            extrapolateRight: "clamp",
+          }),
         }}
       >
-        <Glass blur={14} opacity={0.12} borderRadius={30} borderOpacity={0.3}>
+        <Glass blur={12} opacity={0.15} borderRadius={30} borderOpacity={0.3}>
           <div
             style={{
               padding: "12px 32px",
@@ -270,11 +307,11 @@ export const Scene3Notifications: React.FC = () => {
             }}
           >
             <Img
-              src="https://api.iconify.design/ph:arrow-up-bold.svg?color=%2341EAD4&width=18"
+              src="https://api.iconify.design/ph:arrow-up-bold.svg?color=%2341EAD4&width=16"
               style={{
-                width: 18,
-                height: 18,
-                transform: `translateY(${Math.sin((frame / fps) * 3) * 4}px)`,
+                width: 16,
+                height: 16,
+                transform: `translateY(${Math.sin((frame / fps) * 3) * 3}px)`,
               }}
             />
             <span
@@ -283,8 +320,7 @@ export const Scene3Notifications: React.FC = () => {
                 fontSize: 13,
                 color: "#41EAD4",
                 fontWeight: 600,
-                letterSpacing: "2px",
-                textTransform: "uppercase",
+                letterSpacing: "1px",
               }}
             >
               Swipe Up
